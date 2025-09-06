@@ -5,14 +5,27 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.cotiinformatica.repositories.CategoriaRepository;
+
 @RestController
 @RequestMapping("/api/v1/categorias")
 public class CategoriaContoller {
 	
+	
 	@GetMapping
 	public ResponseEntity<?> getAll() {
-		// TODO
-		return ResponseEntity.ok().build();
+		
+		try {
+			
+			var categoriaRepository = new CategoriaRepository();
+			
+			var lista = categoriaRepository.findAll();
+			
+			return ResponseEntity.status(200).body(lista);
+		} catch (Exception e) {
+			return ResponseEntity.status(500).body(e.getMessage());
+		}
+		
 	}
 
 }
